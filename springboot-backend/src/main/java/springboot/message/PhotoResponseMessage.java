@@ -1,0 +1,18 @@
+package springboot.message;
+
+public class PhotoResponseMessage {
+  private String message;
+
+  public PhotoResponseMessage(String message) {
+    this.message = message;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
+}
