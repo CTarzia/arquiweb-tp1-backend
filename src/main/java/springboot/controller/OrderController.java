@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import springboot.model.PickupOrder;
+import springboot.model.Status;
 import springboot.model.TableOrder;
+import springboot.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import springboot.exception.ResourceNotFoundException;
 import springboot.model.Order;
 import springboot.repository.OrderRepository;
+
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -32,15 +35,21 @@ public class OrderController {
 
     // create order
     @PostMapping("/table/{restoid}")
-    public Order createTableOrder(@RequestBody TableOrder order, @PathVariable Long restoid) {
+    public long createTableOrder(@RequestBody TableOrder order, @PathVariable Long restoid) {
+        Status initialStatus = Status.PENDING;
         order.setRestoId(restoid);
-        return orderRepository.save(order);
+        order.setStatus(initialStatus);
+        orderRepository.save(order);
+        return order.getOrderId();
     }
 
     @PostMapping("/client/{restoid}")
-    public Order createPickupOrder(@RequestBody PickupOrder order, @PathVariable Long restoid) {
+    public long createPickupOrder(@RequestBody PickupOrder order, @PathVariable Long restoid) {
+        Status initialStatus = Status.PENDING;
         order.setRestoId(restoid);
-        return orderRepository.save(order);
+        order.setStatus(initialStatus);
+        orderRepository.save(order);
+        return order.getOrderId();
     }
 
     // update order rest api
@@ -53,8 +62,8 @@ public class OrderController {
         order.setStatus(newOrder.getStatus());
         order.setContent(newOrder.getContent());
 
-        Order updatedOrder = orderRepository.save(order);
-        return ResponseEntity.ok(updatedOrder);
+        orderRepository.save(order);
+        return ResponseEntity.ok(order);
     }
 
     // delete order rest api

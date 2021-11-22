@@ -7,23 +7,23 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("PickupOrder")
 public class PickupOrder extends Order {
-    @Column(name = "clientId")
-    private Long clientId;
+    @Column(name = "clientName")
+    private String clientName;
 
     public PickupOrder() {
 
     }
 
-    public PickupOrder(Long clientId) {
+    public PickupOrder(String clientName) {
         super();
-        this.clientId = clientId;
+        this.clientName = clientName;
     }
 
-    public Long getClientId() {
-        return clientId;
+    public String getClientName() {
+        return clientName;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 }

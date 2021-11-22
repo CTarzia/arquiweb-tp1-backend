@@ -1,8 +1,8 @@
 package springboot.model;
 
 public enum Status {
+    PENDING,
     DENIED,
-    ACCEPTED,
     PROGRESS,
     READY
 }

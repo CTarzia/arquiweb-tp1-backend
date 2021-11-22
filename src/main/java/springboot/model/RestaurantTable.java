@@ -23,6 +23,9 @@ public class RestaurantTable {
     @Column(name = "restaurantid")
     private Long restaurantId;
 
+    @Column(name = "restaurantname")
+    private String restaurantName;
+
     public RestaurantTable() {
 
     }
@@ -71,5 +74,14 @@ public class RestaurantTable {
 
     public void setTableNumber(long tableNumber) {
         this.tableNumber = tableNumber;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 }

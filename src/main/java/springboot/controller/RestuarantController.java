@@ -60,7 +60,7 @@ public class RestuarantController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteRestaurant(@PathVariable Long id){
 		Restaurant restaurant = restaurantRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Restaurant not exist with id :" + id));
 
 		restaurantRepository.delete(restaurant);
 		Map<String, Boolean> response = new HashMap<>();
