@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springboot.exception.ResourceNotFoundException;
+import springboot.model.App;
 import springboot.model.Order;
 import springboot.model.Restaurant;
 import springboot.repository.OrderRepository;
@@ -33,6 +34,7 @@ public class RestuarantController {
 
 	@PostMapping("/")
 	public Restaurant createRestaurant(@RequestBody Restaurant restaurant) {
+		restaurant.setAppId(App.APP_ID);
 		return restaurantRepository.save(restaurant);
 	}
 

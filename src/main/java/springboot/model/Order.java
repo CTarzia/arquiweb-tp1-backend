@@ -2,13 +2,6 @@ package springboot.model;
 
 import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 @Entity
 @Inheritance
 //@DiscriminatorColumn(name = "Order_Type")
@@ -40,7 +33,6 @@ public class Order {
         this.content = content;
         this.status = status;
         this.restoId = restoId;
-        this.appId = 1;
     }
 
     public String getContent() {

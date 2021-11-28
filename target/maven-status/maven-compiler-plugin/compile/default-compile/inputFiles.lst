@@ -19,6 +19,7 @@
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/service/MenuStorageService.java
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/model/TableOrder.java
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/controller/RestuarantController.java
+/home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/model/App.java
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/repository/RestaurantRepository.java
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/message/MenuResponseFile.java
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/repository/RestaurantTableRepository.java

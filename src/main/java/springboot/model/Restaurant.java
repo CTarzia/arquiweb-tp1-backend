@@ -40,7 +40,6 @@ public class Restaurant {
 		this.longitude = longitude;
 		this.phoneNumber = phoneNumber;
 		this.workingHours = workingHours;
-		this.appId = 1;
 	}
 	public long getId() {
 		return id;

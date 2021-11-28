@@ -1,20 +1,14 @@
 package springboot.controller;
 
-import java.util.HashMap;
-
-import java.util.Map;
-
-import springboot.model.PickupOrder;
-import springboot.model.Status;
-import springboot.model.TableOrder;
-import springboot.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import springboot.exception.ResourceNotFoundException;
-import springboot.model.Order;
+import springboot.model.*;
 import springboot.repository.OrderRepository;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -39,6 +33,7 @@ public class OrderController {
         Status initialStatus = Status.PENDING;
         order.setRestoId(restoid);
         order.setStatus(initialStatus);
+        order.setAppId(App.APP_ID);
         orderRepository.save(order);
         return order.getOrderId();
     }
@@ -48,6 +43,7 @@ public class OrderController {
         Status initialStatus = Status.PENDING;
         order.setRestoId(restoid);
         order.setStatus(initialStatus);
+        order.setAppId(App.APP_ID);
         orderRepository.save(order);
         return order.getOrderId();
     }

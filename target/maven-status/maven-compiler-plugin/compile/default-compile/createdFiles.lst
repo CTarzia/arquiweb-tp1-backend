@@ -16,6 +16,7 @@ springboot/model/PickupOrder.class
 springboot/repository/PhotoRepository.class
 springboot/model/Menu.class
 springboot/model/User.class
+springboot/model/App.class
 springboot/service/MenuStorageService.class
 springboot/repository/OrderRepository.class
 springboot/message/PhotoResponseMessage.class
