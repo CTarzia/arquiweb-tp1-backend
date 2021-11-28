@@ -28,6 +28,9 @@ public class Order {
     @Column(name = "restoId")
     private Long restoId;
 
+    @Column(name = "appId")
+    private int appId;
+
     public Order() {
 
     }
@@ -37,6 +40,7 @@ public class Order {
         this.content = content;
         this.status = status;
         this.restoId = restoId;
+        this.appId = 1;
     }
 
     public String getContent() {
@@ -67,6 +71,14 @@ public class Order {
 
     public void setRestoId(Long restoId) {
         this.restoId = restoId;
+    }
+
+    public int getAppId() {
+        return appId;
+    }
+
+    public void setAppId(int appId) {
+        this.appId = appId;
     }
 }
 
