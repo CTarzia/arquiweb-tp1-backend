@@ -1,23 +1,25 @@
 package springboot.controller;
 
-import springboot.exception.ResourceNotFoundException;
-import springboot.message.MenuResponseMessage;
-import springboot.model.Menu;
-import springboot.service.MenuStorageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springboot.exception.ResourceNotFoundException;
+import springboot.message.MenuResponseMessage;
+import springboot.model.Menu;
+import springboot.service.MenuStorageService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/carta/")
 public class MenuController {
 
-  @Autowired
-  private MenuStorageService storageService;
+  private final MenuStorageService storageService;
+
+  public MenuController(MenuStorageService storageService) {
+    this.storageService = storageService;
+  }
 
   @PostMapping("/{restaurantId}")
   public ResponseEntity<MenuResponseMessage> uploadMenu(@PathVariable Long restaurantId, @RequestParam("file") MultipartFile file) {

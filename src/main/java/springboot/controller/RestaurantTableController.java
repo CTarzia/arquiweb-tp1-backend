@@ -1,22 +1,24 @@
 package springboot.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import springboot.exception.ResourceNotFoundException;
 import springboot.model.RestaurantTable;
 import springboot.repository.RestaurantTableRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/mesas/")
 public class RestaurantTableController {
 
-    @Autowired
-    private RestaurantTableRepository restaurantTableRepository;
+    private final RestaurantTableRepository restaurantTableRepository;
+
+    public RestaurantTableController(RestaurantTableRepository restaurantTableRepository) {
+        this.restaurantTableRepository = restaurantTableRepository;
+    }
 
     // get all tables for a restaurant
     @GetMapping("/{restoid}")
@@ -32,7 +34,7 @@ public class RestaurantTableController {
         List<RestaurantTable> tables = getByRestaurantId(restoid).stream().sorted(Comparator.comparing(RestaurantTable::getTableNumber)).collect(Collectors.toList());
         if (tables.isEmpty()) {restaurantTable.setTableNumber(1);}
         else {
-            Boolean foundNumber = false;
+            boolean foundNumber = false;
             for (int i = 0; !foundNumber; i++) {
                 if (tables.size() == i ) {
                     foundNumber = true;
@@ -42,9 +44,9 @@ public class RestaurantTableController {
                     if (currentTable.getTableNumber() != (i+1)){
                         foundNumber = true;
                         restaurantTable.setTableNumber(i+1);
-                    };
-                };
-            };
+                    }
+                }
+            }
         }
         restaurantTable.setStatus(false);
         restaurantTable.setCalling_server(false);
@@ -57,8 +59,6 @@ public class RestaurantTableController {
         RestaurantTable table = restaurantTableRepository.findById(tableid)
                 .orElseThrow(() -> new ResourceNotFoundException("Table does not exist with id :" + tableid));
         return ResponseEntity.ok(table);
-        // No estoy usando el restoid porque el id de la mesa es único
-        // El id de la mesa no es el número de mesa. Tendría que incluír el número de mesa en el struct de mesa?
     }
 
     // change table state
@@ -91,10 +91,9 @@ public class RestaurantTableController {
     }
 
     public List<RestaurantTable> getByRestaurantId(Long restaurantId) {
-        List<RestaurantTable> tables = restaurantTableRepository.findAll().stream()
+        return restaurantTableRepository.findAll().stream()
                 .filter(table -> Objects.equals(table.getRestaurantId(), restaurantId))
                 .collect(Collectors.toList());
-        return tables;
     }
 
 }

@@ -16,16 +16,24 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/restaurantes/")
 public class RestuarantController {
 
-	@Autowired
 	private RestaurantRepository restaurantRepository;
 
+	private final OrderRepository orderRepository;
+
+	public RestuarantController(OrderRepository orderRepository) {
+		this.orderRepository = orderRepository;
+	}
+
 	@Autowired
-	private OrderRepository orderRepository;
+	public RestuarantController(RestaurantRepository restaurantRepository, OrderRepository orderRepository) {
+		this.restaurantRepository = restaurantRepository;
+		this.orderRepository = orderRepository;
+	}
 
 	@GetMapping("/")
 	public List<Restaurant> getAllRestaurants(){
