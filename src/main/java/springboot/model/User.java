@@ -3,26 +3,29 @@ package springboot.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "name")
-	private String name;
+	@Column(name = "username")
+	private String username;
 
 	@Column(name = "password")
 	private String password;
+
+	@Column(name = "restaurantId")
+	private int restaurantId;
 
 	public User() {
 
 	}
 
-	public User(String name, String password) {
+	public User(String username, String password) {
 		super();
-		this.name = name;
+		this.username = username;
 		this.password = password;
 	}
 	public long getId() {
@@ -32,12 +35,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -48,4 +51,11 @@ public class User {
 		this.password = password;
 	}
 
+	public int getRestaurantId() {
+		return restaurantId;
+	}
+
+	public void setRestaurantId(int restaurantId) {
+		this.restaurantId = restaurantId;
+	}
 }
