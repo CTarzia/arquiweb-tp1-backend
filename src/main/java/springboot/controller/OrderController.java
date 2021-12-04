@@ -3,7 +3,9 @@ package springboot.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springboot.exception.ResourceNotFoundException;
-import springboot.model.*;
+import springboot.model.App;
+import springboot.model.Order;
+import springboot.model.Status;
 import springboot.repository.OrderRepository;
 
 import java.util.HashMap;
@@ -23,15 +25,15 @@ public class OrderController {
 
     // get one order by id
     @GetMapping("/{orderid}")
-    public ResponseEntity<Order> getTableOrder(@PathVariable Long orderid){
+    public ResponseEntity<Order> getOrder(@PathVariable Long orderid){
         Order order = orderRepository.findById(orderid)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not exist with id :" + orderid));
         return ResponseEntity.ok(order);
     }
 
     // create order
-    @PostMapping("/table/{restoid}")
-    public long createTableOrder(@RequestBody TableOrder order, @PathVariable Long restoid) {
+    @PostMapping("/{restoid}")
+    public long createrder(@RequestBody Order order, @PathVariable Long restoid) {
         Status initialStatus = Status.PENDING;
         order.setRestoId(restoid);
         order.setStatus(initialStatus);
@@ -40,18 +42,7 @@ public class OrderController {
         return order.getOrderId();
     }
 
-    @PostMapping("/client/{restoid}")
-    public long createPickupOrder(@RequestBody PickupOrder order, @PathVariable Long restoid) {
-        Status initialStatus = Status.PENDING;
-        order.setRestoId(restoid);
-        order.setStatus(initialStatus);
-        order.setAppId(App.APP_ID);
-        orderRepository.save(order);
-        return order.getOrderId();
-    }
-
-    // update order rest api
-
+    // update order
     @PutMapping("/{orderid}")
     public ResponseEntity<Order> updateOrder(@PathVariable Long orderid, @RequestBody Order newOrder){
         Order order = orderRepository.findById(orderid)
