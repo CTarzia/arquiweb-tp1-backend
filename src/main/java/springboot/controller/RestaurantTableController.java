@@ -6,14 +6,14 @@ import springboot.exception.ResourceNotFoundException;
 import springboot.model.RestaurantTable;
 import springboot.repository.RestaurantTableRepository;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/mesas/")
 public class RestaurantTableController {
-
     private final RestaurantTableRepository restaurantTableRepository;
 
     public RestaurantTableController(RestaurantTableRepository restaurantTableRepository) {
@@ -23,33 +23,18 @@ public class RestaurantTableController {
     // get all tables for a restaurant
     @GetMapping("/{restoid}")
     public List<RestaurantTable> getAllTables(@PathVariable Long restoid){
-        return getByRestaurantId(restoid).stream().sorted(Comparator.comparing(RestaurantTable::getTableNumber)).collect(Collectors.toList());
-                //.orElseThrow(() -> new ResourceNotFoundException("Restaurant not exist with id :" + restoid));
+        return restaurantTableRepository.findByRestaurantIdOrderByTableNumberAsc(restoid);
     }
 
     // create table for a restaurant
     @PostMapping("/{restoid}")
     public RestaurantTable createRestaurantTable(@PathVariable Long restoid, @RequestBody RestaurantTable restaurantTable) {
+        List<RestaurantTable> tables = restaurantTableRepository.findByRestaurantIdOrderByTableNumberAsc(restoid);
+        long tableNumber = tables.isEmpty() ? 1 : tables.get(tables.size()-1).getTableNumber() + 1;
+
         restaurantTable.setRestaurantId(restoid);
-        List<RestaurantTable> tables = getByRestaurantId(restoid).stream().sorted(Comparator.comparing(RestaurantTable::getTableNumber)).collect(Collectors.toList());
-        if (tables.isEmpty()) {restaurantTable.setTableNumber(1);}
-        else {
-            boolean foundNumber = false;
-            for (int i = 0; !foundNumber; i++) {
-                if (tables.size() == i ) {
-                    foundNumber = true;
-                    restaurantTable.setTableNumber(i+1);
-                }else{
-                    RestaurantTable currentTable = tables.get(i);
-                    if (currentTable.getTableNumber() != (i+1)){
-                        foundNumber = true;
-                        restaurantTable.setTableNumber(i+1);
-                    }
-                }
-            }
-        }
-        restaurantTable.setStatus(false);
-        restaurantTable.setCalling_server(false);
+        restaurantTable.setTableNumber(tableNumber);
+        restaurantTable.setCallingServer(false);
         return restaurantTableRepository.save(restaurantTable);
     }
 
@@ -61,23 +46,16 @@ public class RestaurantTableController {
         return ResponseEntity.ok(table);
     }
 
-    // change table state
-    @PutMapping("/{restoid}/{tableid}/status")
-    public ResponseEntity<RestaurantTable> changeTableState(@PathVariable Long restoid,@PathVariable Long tableid) {
+    @PutMapping("/{restoid}/{tableid}/")
+    public ResponseEntity<RestaurantTable> updateTable(@PathVariable Long restoid, @PathVariable Long tableid, @RequestBody RestaurantTable tableDetails) {
         RestaurantTable table = restaurantTableRepository.findById(tableid)
                 .orElseThrow(() -> new ResourceNotFoundException("Table does not exist with id :" + tableid));
-        table.setStatus(!(table.getStatus()));
-        restaurantTableRepository.save(table);
-        return ResponseEntity.ok(table);
-    }
 
-    @PutMapping("/{restoid}/{tableid}/server")
-    public ResponseEntity<RestaurantTable> changeTableServerState(@PathVariable Long restoid,@PathVariable Long tableid) {
-        RestaurantTable table = restaurantTableRepository.findById(tableid)
-                .orElseThrow(() -> new ResourceNotFoundException("Table does not exist with id :" + tableid));
-        table.setCalling_server(!(table.getCalling_server()));
-        restaurantTableRepository.save(table);
-        return ResponseEntity.ok(table);
+        table.setCallingServer(tableDetails.getCallingServer()); // can only update calling server
+
+        RestaurantTable updatedTable = restaurantTableRepository.save(tableDetails);
+
+        return ResponseEntity.ok(updatedTable);
     }
 
     @DeleteMapping("/{restoid}/{tableid}")
@@ -85,15 +63,10 @@ public class RestaurantTableController {
         RestaurantTable table = restaurantTableRepository.findById(tableid)
                 .orElseThrow(() -> new ResourceNotFoundException("Table does not exist with id :" + tableid));
         restaurantTableRepository.delete(table);
+
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return ResponseEntity.ok(response);
-    }
-
-    public List<RestaurantTable> getByRestaurantId(Long restaurantId) {
-        return restaurantTableRepository.findAll().stream()
-                .filter(table -> Objects.equals(table.getRestaurantId(), restaurantId))
-                .collect(Collectors.toList());
     }
 
 }

@@ -13,8 +13,6 @@ import springboot.repository.RestaurantRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -80,9 +78,7 @@ public class RestuarantController {
 
 	@GetMapping("/{restoId}/pedidos")
 	public ResponseEntity<List<Order>> getRestaurantOrders(@PathVariable Long restoId) {
-		List<Order> orders = orderRepository.findAll().stream()
-				.filter(order -> Objects.equals(order.getRestoId(), restoId))
-				.collect(Collectors.toList());
+		List<Order> orders = orderRepository.findByRestoId(restoId);
 		return ResponseEntity.ok(orders);
 	}
 	

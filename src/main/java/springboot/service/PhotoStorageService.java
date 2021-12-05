@@ -32,6 +32,7 @@ public class PhotoStorageService {
     public Optional<Photo> getFile(Long id) {
         return photoRepository.findById(id);
     }
+
     public List<Long> getByRestaurantId(Long restaurantId) {
         return photoRepository.findAll().stream()
                 .filter(photo -> Objects.equals(photo.getRestaurantId(), restaurantId))

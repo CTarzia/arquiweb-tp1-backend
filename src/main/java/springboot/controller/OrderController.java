@@ -33,7 +33,7 @@ public class OrderController {
 
     // create order
     @PostMapping("/{restoid}")
-    public long createrder(@RequestBody Order order, @PathVariable Long restoid) {
+    public long createOrder(@RequestBody Order order, @PathVariable Long restoid) {
         Status initialStatus = Status.PENDING;
         order.setRestoId(restoid);
         order.setStatus(initialStatus);
