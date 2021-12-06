@@ -50,7 +50,7 @@ public class RestaurantTableController {
     public ResponseEntity<RestaurantTable> callServer(@PathVariable Long restoid, @PathVariable Long tableid) {
         RestaurantTable table = restaurantTableRepository.findById(tableid)
                 .orElseThrow(() -> new ResourceNotFoundException("Table does not exist with id :" + tableid));
-        table.setCallingServer(!table.getCallingServer()); // can only update calling server
+        table.setCallingServer(!table.getCallingServer());
 
         RestaurantTable updatedTable = restaurantTableRepository.save(table);
 

@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springboot.exception.ResourceNotFoundException;
 import springboot.model.User;
+import springboot.repository.RestaurantRepository;
 import springboot.repository.UserRepository;
 
 import java.util.HashMap;
@@ -16,13 +17,22 @@ import java.util.Map;
 public class UserController {
 
 	private final UserRepository userRepository;
+	private final RestaurantRepository restaurantRepository;
 
-	public UserController(UserRepository userRepository) {
+	public UserController(UserRepository userRepository, RestaurantRepository restaurantRepository) {
 		this.userRepository = userRepository;
+		this.restaurantRepository = restaurantRepository;
 	}
 
 	@PostMapping("/")
 	public User createUser(@RequestBody User user) {
+		if (user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
+			throw new IllegalArgumentException("Missing username or password");
+		}
+		if (!restaurantRepository.findById(user.getRestaurantId()).isPresent()) {
+			throw new IllegalArgumentException(String.format("Restaurant with id %d does not exist.", user.getRestaurantId()));
+		}
+
 		return userRepository.save(user);
 	}
 
