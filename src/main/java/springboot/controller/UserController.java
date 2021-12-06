@@ -9,8 +9,6 @@ import springboot.repository.UserRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -35,11 +33,9 @@ public class UserController {
 		return ResponseEntity.ok(user);
 	}
 
-	@GetMapping("/")
-	public ResponseEntity<Long> checkUser(@RequestBody User user) {
-		List<User> userList =  userRepository.findAll().stream()
-				.filter(u -> Objects.equals(u.getUsername(), user.getUsername()) && Objects.equals(u.getPassword(), user.getPassword()))
-				.collect(Collectors.toList());
+	@GetMapping("/{username}/{password}")
+	public ResponseEntity<Long> checkUser(@PathVariable String username, @PathVariable String password) {
+		List<User> userList =  userRepository.findByUsernameAndPassword(username, password);
 
 		if (userList.isEmpty()) {
 			throw new ResourceNotFoundException("User or password is incorrect");
