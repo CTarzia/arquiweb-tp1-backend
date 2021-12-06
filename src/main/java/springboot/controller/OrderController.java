@@ -35,13 +35,16 @@ public class OrderController {
     @PostMapping("/table/{restoid}")
     public ResponseEntity<Order> createTableOrder(@RequestBody TableOrder order, @PathVariable Long restoid) {
         if (restaurantTableRepository.findByRestaurantIdAndTableId(restoid, order.getTableNumber()).isEmpty()) {
-            throw new IllegalArgumentException(String.format("No table found with tableId %d and restaurantId %d", restoid, order.getTableNumber()));
+            throw new IllegalArgumentException(String.format("No table found with tableId %d and restaurantId %d.", restoid, order.getTableNumber()));
         }
         return createOrder(order, restoid, Type.TABLE);
     }
 
     @PostMapping("/pickup/{restoid}")
     public ResponseEntity<Order> createPickupOrder(@RequestBody PickupOrder order, @PathVariable Long restoid) {
+        if (order.getClientName().isEmpty()) {
+            throw new IllegalArgumentException("No client name specified.");
+        }
         return createOrder(order, restoid, Type.PICKUP);
     }
 
