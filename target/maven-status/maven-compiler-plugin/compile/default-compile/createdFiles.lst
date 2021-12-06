@@ -3,6 +3,7 @@ springboot/model/Status.class
 springboot/controller/UserController.class
 springboot/exception/ResourceNotFoundException.class
 springboot/service/PhotoStorageService.class
+springboot/model/Type.class
 springboot/model/Photo.class
 springboot/controller/PhotoController.class
 springboot/controller/RestaurantTableController.class

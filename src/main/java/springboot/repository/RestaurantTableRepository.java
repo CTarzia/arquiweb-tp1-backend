@@ -8,5 +8,8 @@ import java.util.List;
 
 @Repository
 public interface RestaurantTableRepository extends JpaRepository<RestaurantTable, Long>{
+
     List<RestaurantTable> findByRestaurantIdOrderByTableNumberAsc(long restaurantId);
+
+    List<RestaurantTable> findByRestaurantIdAndTableId (long restaurantId, long tableId);
 }

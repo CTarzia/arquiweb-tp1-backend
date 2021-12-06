@@ -46,14 +46,13 @@ public class RestaurantTableController {
         return ResponseEntity.ok(table);
     }
 
-    @PutMapping("/{restoid}/{tableid}/")
-    public ResponseEntity<RestaurantTable> updateTable(@PathVariable Long restoid, @PathVariable Long tableid, @RequestBody RestaurantTable tableDetails) {
+    @PostMapping("/{restoid}/{tableid}/call")
+    public ResponseEntity<RestaurantTable> callServer(@PathVariable Long restoid, @PathVariable Long tableid) {
         RestaurantTable table = restaurantTableRepository.findById(tableid)
                 .orElseThrow(() -> new ResourceNotFoundException("Table does not exist with id :" + tableid));
+        table.setCallingServer(!table.getCallingServer()); // can only update calling server
 
-        table.setCallingServer(tableDetails.getCallingServer()); // can only update calling server
-
-        RestaurantTable updatedTable = restaurantTableRepository.save(tableDetails);
+        RestaurantTable updatedTable = restaurantTableRepository.save(table);
 
         return ResponseEntity.ok(updatedTable);
     }

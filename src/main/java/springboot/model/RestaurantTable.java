@@ -31,11 +31,11 @@ public class RestaurantTable {
         this.restaurantId = restaurantId;
     }
 
-    public long getTableID() {
+    public long getTableId() {
         return tableId;
     }
 
-    public void setTableID(long id) {
+    public void setTableId(long id) {
         this.tableId = id;
     }
 

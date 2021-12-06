@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance
-//@DiscriminatorColumn(name = "Order_Type")
 @Table(name = "orders")
 public class Order {
 
@@ -23,6 +22,9 @@ public class Order {
 
     @Column(name = "appId")
     private int appId;
+
+    @Column(name = "type")
+    private Type type;
 
     public Order() {
 
@@ -71,6 +73,14 @@ public class Order {
 
     public void setAppId(int appId) {
         this.appId = appId;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }
 

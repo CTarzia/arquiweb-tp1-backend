@@ -25,6 +25,7 @@
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/repository/RestaurantTableRepository.java
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/SpringbootBackendApplication.java
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/message/PhotoResponseMessage.java
+/home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/model/Type.java
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/controller/OrderController.java
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/exception/ResourceNotFoundException.java
 /home/chiara/repos/arquiweb-tp1/springboot-backend/src/main/java/springboot/service/PhotoStorageService.java
