@@ -34,13 +34,13 @@ public class UserController {
 	}
 
 	@GetMapping("/{username}/{password}")
-	public ResponseEntity<Long> checkUser(@PathVariable String username, @PathVariable String password) {
+	public ResponseEntity<User> checkUser(@PathVariable String username, @PathVariable String password) {
 		List<User> userList =  userRepository.findByUsernameAndPassword(username, password);
 
 		if (userList.isEmpty()) {
 			throw new ResourceNotFoundException("User or password is incorrect");
 		}
-		return ResponseEntity.ok(userList.get(0).getId());
+		return ResponseEntity.ok(userList.get(0));
 	}
 
 	@DeleteMapping("/{id}")
