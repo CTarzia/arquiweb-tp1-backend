@@ -60,6 +60,7 @@ public class RestuarantController {
 		restaurant.setLongitude(restaurantDetails.getLongitude());
 		restaurant.setName(restaurantDetails.getName());
 		restaurant.setWorkingHours(restaurantDetails.getWorkingHours());
+		restaurant.setPhoneNumber(restaurantDetails.getPhoneNumber());
 
 		Restaurant updatedRestaurant = restaurantRepository.save(restaurant);
 		return ResponseEntity.ok(updatedRestaurant);
